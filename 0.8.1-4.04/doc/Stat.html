@@ -1,0 +1,339 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Stat — Stat watcher &mdash; pyev v0.8.1-4.04 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.8.1-4.04',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pyev v0.8.1-4.04 documentation" href="index.html" />
+    <link rel="up" title="Watchers" href="Watcher.html" />
+    <link rel="next" title="Idle — Idle watcher" href="Idle.html" />
+    <link rel="prev" title="Child — Child watcher" href="Child.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Idle.html" title="Idle — Idle watcher"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Child.html" title="Child — Child watcher"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyev v0.8.1-4.04 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" accesskey="U">Watchers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="stat-stat-watcher">
+<span id="stat"></span><h1><a class="reference internal" href="#pyev.Stat" title="pyev.Stat"><tt class="xref py py-class docutils literal"><span class="pre">Stat</span></tt></a> &#8212; Stat watcher<a class="headerlink" href="#stat-stat-watcher" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyev.Stat">
+<em class="property">class </em><tt class="descclassname">pyev.</tt><tt class="descname">Stat</tt><big>(</big><em>path</em>, <em>interval</em>, <em>loop</em>, <em>callback</em><span class="optional">[</span>, <em>data=None</em>, <em>priority=0</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Stat" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> &#8211; wait for status changes of the given <em>path</em>.</li>
+<li><strong>interval</strong> (<em>float</em>) &#8211; hint on how quickly a change is expected to be
+detected and should normally be specified as <tt class="docutils literal"><span class="pre">0.0</span></tt> to let libev
+choose a suitable value.</li>
+<li><strong>loop</strong> (<a class="reference internal" href="Loop.html#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a>) &#8211; loop object responsible for this watcher (accessible through
+<a class="reference internal" href="Watcher.html#pyev.Watcher.loop" title="pyev.Watcher.loop"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.loop</span></tt></a>).</li>
+<li><strong>callback</strong> (<em>callable</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.callback" title="pyev.Watcher.callback"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.callback</span></tt></a>.</li>
+<li><strong>data</strong> (<em>object</em>) &#8211; any Python object you might want to attach to the
+watcher (stored in <a class="reference internal" href="Watcher.html#pyev.Watcher.data" title="pyev.Watcher.data"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.data</span></tt></a>).</li>
+<li><strong>priority</strong> (<em>int</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.priority" title="pyev.Watcher.priority"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.priority</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This watches a file system path for attribute changes. That is, it calls
+<tt class="xref c c-func docutils literal"><span class="pre">stat()</span></tt> on that path in regular intervals (or when the OS says it
+changed) and sees if it changed compared to the last time, invoking the
+callback if it did.</p>
+<p>The path does not need to exist: changing from &#8216;path exists&#8217; to &#8216;path does
+not exist&#8217; is a status change like any other. The condition &#8216;path does not
+exist&#8217; (or more correctly &#8216;path cannot be <tt class="xref c c-func docutils literal"><span class="pre">stat()</span></tt>ed&#8217;) is signified
+by the <a class="reference internal" href="#pyev.Statdata.nlink" title="pyev.Statdata.nlink"><tt class="xref py py-attr docutils literal"><span class="pre">Statdata.nlink</span></tt></a> field being <tt class="docutils literal"><span class="pre">0</span></tt> (which is otherwise
+always forced to be at least <tt class="docutils literal"><span class="pre">1</span></tt>) and all the other fields of the
+<a class="reference internal" href="#pyev.Statdata" title="pyev.Statdata"><tt class="xref py py-class docutils literal"><span class="pre">Statdata</span></tt></a> object having unspecified contents.</p>
+<p>The path must not end in a slash or contain special components such as <tt class="docutils literal"><span class="pre">.</span></tt>
+or <tt class="docutils literal"><span class="pre">..</span></tt>. The path should be absolute: if it is relative and your working
+directory changes, then the behaviour is undefined.</p>
+<p>Since there is no portable change notification interface available, the
+portable implementation simply calls <tt class="xref c c-func docutils literal"><span class="pre">stat()</span></tt> regularly on the path to
+see if it changed somehow. You can specify a recommended polling interval
+for this case. If you specify a polling interval of <tt class="docutils literal"><span class="pre">0.0</span></tt> (highly
+recommended!) then a suitable, unspecified default value will be used (which
+you can expect to be around five seconds, although this might change
+dynamically). libev will also impose a minimum interval which is currently
+around <tt class="docutils literal"><span class="pre">0.1</span></tt>, but that&#8217;s usually overkill.</p>
+<p>This watcher type is not meant for massive numbers of <a class="reference internal" href="#pyev.Stat" title="pyev.Stat"><tt class="xref py py-class docutils literal"><span class="pre">Stat</span></tt></a>
+watchers, as even with OS-supported change notifications, this can be
+resource-intensive.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#code_ev_stat_code_did_the_file_attri">ev_stat - did the file attributes just change?</a></p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#Inotify_and_Kqueue">Inotify and Kqueue</a></li>
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#code_stat_code_is_a_synchronous_oper">stat () is a synchronous operation</a></li>
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#The_special_problem_of_stat_time_res">The special problem of stat time resolution</a></li>
+</ul>
+</div></blockquote>
+</div>
+<dl class="method">
+<dt id="pyev.Stat.set">
+<tt class="descname">set</tt><big>(</big><em>path</em>, <em>interval</em><big>)</big><a class="headerlink" href="#pyev.Stat.set" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> &#8211; wait for status changes of the given <em>path</em>.</li>
+<li><strong>interval</strong> (<em>float</em>) &#8211; hint on how quickly a change is expected to be
+detected and should normally be specified as <tt class="docutils literal"><span class="pre">0.0</span></tt> to let libev
+choose a suitable value.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Configures the watcher.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Stat.stat">
+<tt class="descname">stat</tt><big>(</big><big>)</big><a class="headerlink" href="#pyev.Stat.stat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates <a class="reference internal" href="#pyev.Stat.current" title="pyev.Stat.current"><tt class="xref py py-attr docutils literal"><span class="pre">Stat.current</span></tt></a> immediately with a new
+<a class="reference internal" href="#pyev.Statdata" title="pyev.Statdata"><tt class="xref py py-class docutils literal"><span class="pre">Statdata</span></tt></a> object. If you change the watched path in your
+callback, you could call this function to avoid detecting this change
+(while introducing a race condition if you are not the only one changing
+the path). Can also be useful simply to find out the new values.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Stat.path">
+<tt class="descname">path</tt><a class="headerlink" href="#pyev.Stat.path" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>The file system path that is being watched.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Stat.interval">
+<tt class="descname">interval</tt><a class="headerlink" href="#pyev.Stat.interval" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>The specified interval.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Stat.current">
+<tt class="descname">current</tt><a class="headerlink" href="#pyev.Stat.current" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>Current <a class="reference internal" href="#pyev.Statdata" title="pyev.Statdata"><tt class="xref py py-class docutils literal"><span class="pre">Statdata</span></tt></a>. If the <a class="reference internal" href="#pyev.Statdata.nlink" title="pyev.Statdata.nlink"><tt class="xref py py-attr docutils literal"><span class="pre">nlink</span></tt></a>
+attribute is <tt class="docutils literal"><span class="pre">0</span></tt>, then there was some error while stating the file.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Stat.previous">
+<tt class="descname">previous</tt><a class="headerlink" href="#pyev.Stat.previous" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>Previous <a class="reference internal" href="#pyev.Statdata" title="pyev.Statdata"><tt class="xref py py-class docutils literal"><span class="pre">Statdata</span></tt></a>. The callback gets invoked whenever
+<a class="reference internal" href="#pyev.Stat.previous" title="pyev.Stat.previous"><tt class="xref py py-attr docutils literal"><span class="pre">Stat.previous</span></tt></a> != <a class="reference internal" href="#pyev.Stat.current" title="pyev.Stat.current"><tt class="xref py py-attr docutils literal"><span class="pre">Stat.current</span></tt></a>, or, more precisely,
+one or more of these attributes differ: <a class="reference internal" href="#pyev.Statdata.dev" title="pyev.Statdata.dev"><tt class="xref py py-attr docutils literal"><span class="pre">dev</span></tt></a>,
+<a class="reference internal" href="#pyev.Statdata.ino" title="pyev.Statdata.ino"><tt class="xref py py-attr docutils literal"><span class="pre">ino</span></tt></a>, <a class="reference internal" href="#pyev.Statdata.mode" title="pyev.Statdata.mode"><tt class="xref py py-attr docutils literal"><span class="pre">mode</span></tt></a>,
+<a class="reference internal" href="#pyev.Statdata.nlink" title="pyev.Statdata.nlink"><tt class="xref py py-attr docutils literal"><span class="pre">nlink</span></tt></a>, <a class="reference internal" href="#pyev.Statdata.uid" title="pyev.Statdata.uid"><tt class="xref py py-attr docutils literal"><span class="pre">uid</span></tt></a>,
+<a class="reference internal" href="#pyev.Statdata.gid" title="pyev.Statdata.gid"><tt class="xref py py-attr docutils literal"><span class="pre">gid</span></tt></a>, <a class="reference internal" href="#pyev.Statdata.rdev" title="pyev.Statdata.rdev"><tt class="xref py py-attr docutils literal"><span class="pre">rdev</span></tt></a>,
+<a class="reference internal" href="#pyev.Statdata.size" title="pyev.Statdata.size"><tt class="xref py py-attr docutils literal"><span class="pre">size</span></tt></a>, <a class="reference internal" href="#pyev.Statdata.atime" title="pyev.Statdata.atime"><tt class="xref py py-attr docutils literal"><span class="pre">atime</span></tt></a>,
+<a class="reference internal" href="#pyev.Statdata.mtime" title="pyev.Statdata.mtime"><tt class="xref py py-attr docutils literal"><span class="pre">mtime</span></tt></a>, <a class="reference internal" href="#pyev.Statdata.ctime" title="pyev.Statdata.ctime"><tt class="xref py py-attr docutils literal"><span class="pre">ctime</span></tt></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="statdata">
+<h2><a class="reference internal" href="#pyev.Statdata" title="pyev.Statdata"><tt class="xref py py-class docutils literal"><span class="pre">Statdata</span></tt></a><a class="headerlink" href="#statdata" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyev.Statdata">
+<em class="property">class </em><tt class="descclassname">pyev.</tt><tt class="descname">Statdata</tt><a class="headerlink" href="#pyev.Statdata" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="pyev.Statdata.dev">
+<tt class="descname">dev</tt><a class="headerlink" href="#pyev.Statdata.dev" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>device.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Statdata.rdev">
+<tt class="descname">rdev</tt><a class="headerlink" href="#pyev.Statdata.rdev" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>device type.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Statdata.ino">
+<tt class="descname">ino</tt><a class="headerlink" href="#pyev.Statdata.ino" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>inode.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Statdata.size">
+<tt class="descname">size</tt><a class="headerlink" href="#pyev.Statdata.size" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>total size, in bytes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Statdata.nlink">
+<tt class="descname">nlink</tt><a class="headerlink" href="#pyev.Statdata.nlink" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>number of hard links.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Statdata.mode">
+<tt class="descname">mode</tt><a class="headerlink" href="#pyev.Statdata.mode" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>protection bits.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Statdata.uid">
+<tt class="descname">uid</tt><a class="headerlink" href="#pyev.Statdata.uid" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>user ID of owner.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Statdata.gid">
+<tt class="descname">gid</tt><a class="headerlink" href="#pyev.Statdata.gid" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>group ID of owner.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Statdata.atime">
+<tt class="descname">atime</tt><a class="headerlink" href="#pyev.Statdata.atime" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>time of last access.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Statdata.mtime">
+<tt class="descname">mtime</tt><a class="headerlink" href="#pyev.Statdata.mtime" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>time of last modification.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Statdata.ctime">
+<tt class="descname">ctime</tt><a class="headerlink" href="#pyev.Statdata.ctime" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>time of last status change.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">Stat</span></tt> &#8212; Stat watcher</a><ul>
+<li><a class="reference internal" href="#statdata"><tt class="docutils literal"><span class="pre">Statdata</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Child.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">Child</span></tt> &#8212; Child watcher</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Idle.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">Idle</span></tt> &#8212; Idle watcher</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Stat.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Idle.html" title="Idle — Idle watcher"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Child.html" title="Child — Child watcher"
+             >previous</a> |</li>
+        <li><a href="index.html">pyev v0.8.1-4.04 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" >Watchers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
